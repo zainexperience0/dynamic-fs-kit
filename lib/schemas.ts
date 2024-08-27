@@ -3,116 +3,94 @@ import { nanoid } from "nanoid";
 export const prePath = "main";
 
 export const selectMetaOptions = [
-    {
-      dataType: "string",
-      name: "Text",
-      inputType: "textInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "string",
-      name: "Password",
-      inputType: "passwordInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "number",
-      name: "Number",
-      inputType: "numberInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "string",
-      name: "Email",
-      inputType: "emailInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "string",
-      name: "Phone",
-      inputType: "phoneInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "string",
-      name: "Textarea",
-      inputType: "textareaInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "date",
-      name: "Date",
-      inputType: "dateInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "boolean",
-      name: "Switch",
-      inputType: "switchInput",
-      isSearchable: false,
-      isSortable: false,
-    },
-    {
-      dataType: "boolean",
-      name: "Checkbox",
-      inputType: "checkboxInput",
-    },
-    {
-      dataType: "array",
-      name: "MultiSelect",
-      inputType: "msSelectInput",
-    },
-    {
-      dataType: "string",
-      name: "Select",
-      inputType: "selectInput",
-    },
-    {
-      dataType: "string",
-      name: "Radio",
-      inputType: "radioInput",
-    },
-    {
-      dataType: "boolean",
-      name: "Toggle",
-      inputType: "toggleInput",
-    },
-    {
-      dataType: "array",
-      name: "MultiSelectToggle",
-      inputType: "mstoggleInput",
-    },
-    {
-      dataType: "array",
-      name: "Tags",
-      inputType: "tagInput",
-    },
-    {
-      dataType: "string",
-      name: "Markdown",
-      inputType: "markdownInput",
-    },
-    {
-      dataType: "string",
-      name: "URL",
-      inputType: "urlInput",
-    },
-    {
-      dataType: "file",
-      name: "File",
-      inputType: "fileInput",
-    },
-    {
-      dataType: "string",
-      name: "RedirectButton",
-      inputType: "redirectButton",
-    }
-  ];
-  
+  {
+    label: "Text",
+    dataType: "string",
+    inputType: "textInput",
+  },
+  {
+    label: "Password",
+    dataType: "string",
+    inputType: "passwordInput",
+  },
+  {
+    label: "Number",
+    dataType: "number",
+    inputType: "numberInput",
+  },
+  {
+    label: "Email",
+    dataType: "string",
+    inputType: "emailInput",
+  },
+  {
+    label: "Phone",
+    dataType: "string",
+    inputType: "phoneInput",
+  },
+  {
+    label: "Textarea",
+    dataType: "string",
+    inputType: "textareaInput",
+  },
+  {
+    label: "Date",
+    dataType: "date",
+    inputType: "dateInput",
+  },
+  {
+    label: "Switch",
+    dataType: "boolean",
+    inputType: "switchInput",
+  },
+  {
+    label: "Checkbox",
+    dataType: "boolean",
+    inputType: "checkboxInput",
+  },
+  {
+    label: "Multiselect",
+    dataType: "array",
+    inputType: "msSelectInput",
+  },
+  {
+    label: "Select",
+    dataType: "string",
+    inputType: "selectInput",
+  },
+  {
+    label: "Toggle",
+    dataType: "boolean",
+    inputType: "toggleInput",
+  },
+  {
+    label: "Multitoggle",
+    dataType: "array",
+    inputType: "mstoggleInput",
+  },
+  {
+    label: "Tag",
+    dataType: "array",
+    inputType: "tagInput",
+  },
+  {
+    label: "Markdown",
+    dataType: "string",
+    inputType: "markdownInput",
+  },
+  {
+    label: "Url",
+    dataType: "string",
+    inputType: "urlInput",
+  },
+  {
+    label: "File",
+    dataType: "file",
+    inputType: "fileInput",
+  },
+  {
+    label: "Redirect",
+    dataType: "string",
+    inputType: "redirectButton",
+  },
+];

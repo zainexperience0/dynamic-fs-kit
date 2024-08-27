@@ -13,18 +13,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { RenderInput } from "./RenderInput";
 
 export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
 
-    const [data, setData] = useState({
-        name: "",
-        inputType: "",
-        dataType: "",
-        isSearchable: false,
-        isSortable: false,
-    });
+    const [data, setData] = useState<any>([]);
 
     const [creating, setCreating] = useState(false);
     const [createSuccess, setCreateSuccess] = useState(false);
@@ -45,7 +40,7 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
                 setTimeout(() => {
                     resetFields();
                     if (!callbackFn) {
-                        window.history.back();
+                        window.location.reload();
                     } else {
                         callbackFn();
                     }
@@ -71,7 +66,7 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
         });
     };
 
-    console.log({ data });
+    console.log(data);
 
 
     if (!model) {
@@ -110,29 +105,60 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
                 </Breadcrumb>
             )}
             <div className="space-y-6 border p-6">
-                <div className="flex items-center justify-between">
-                    <Label>InputType</Label>
-                    <Select
-                        value={data.inputType}
-                        onValueChange={(e) => {
-                            const selectedOption = selectMetaOptions.find(option => option.inputType === e);
-                            setData({
-                                ...data,
-                                inputType: e,
-                                dataType: selectedOption?.dataType || ""
-                            });
-                        }}>
-                        <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Select InputType" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {selectMetaOptions.map(option => (
-                                <SelectItem key={option.inputType} value={option.inputType}>
-                                    {option.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                <div className="">
+                    <div className="flex items-center justify-between">
+                        <Label>InputType</Label>
+                        <Select
+                            value={data.inputType}
+                            onValueChange={(e) => {
+                                const selectedOption = selectMetaOptions.find(option => option.inputType === e);
+                                setData({
+                                    ...data,
+                                    inputType: e,
+                                    dataType: selectedOption?.dataType || "",
+                                    search: {
+                                        connect: {
+                                            id: id
+                                        }
+                                    },
+                                    sort: {
+                                        connect: {
+                                            id: id
+                                        }
+                                    },
+                                    listTitle: {
+                                        connect: {
+                                            id: id
+                                        }
+                                    },
+                                    listDescription: {
+                                        connect: {
+                                            id: id
+                                        }
+                                    },
+                                    Table: {
+                                        connect: {
+                                            id: id
+                                        }
+                                    }
+                                });
+                            }}>
+                            <SelectTrigger className="w-[200px]">
+                                <SelectValue placeholder="Select InputType" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {selectMetaOptions.map(option => (
+                                    <SelectItem key={option.inputType} value={option.inputType}>
+                                        {option.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <Separator className="my-4" />
+                </div>
+                <div>
+                    <RenderInput data={data} setData={setData} />
                 </div>
             </div>
             <Button

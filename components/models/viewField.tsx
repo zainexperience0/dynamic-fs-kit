@@ -14,7 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { CreateMeta } from "./Meta/Create";
 import {
   Table,
@@ -49,7 +49,56 @@ export const ViewField = ({ modelSlug, id }: any) => {
           id: true,
           name: true,
           description: true,
-          fields: true,
+          fields: {
+            select: {
+              id: true,
+              name: true,
+              inputType: true,
+              dataType: true,
+              isSearchable: true,
+              isSortable: true,
+              fieldCreate: {
+                select: {
+                  id: true,
+                  isUI: true,
+                  isRequired: true,
+                  isAuth: true,
+                  authRoles: true,
+                  isUnique: true,
+                  defaultValue: true,
+                }
+              },
+              fieldUpdate: {
+                select: {
+                  id: true,
+                  isUI: true,
+                  isRequired: true,
+                  isAuth: true,
+                  authRoles: true,
+                  isUnique: true,
+                }
+              },
+              fieldDelete: {
+                select: {
+                  id: true,
+                  isUI: true,
+                  isAuth: true,
+                  authRoles: true,
+                }
+              },
+              fieldFind: {
+                select: {
+                  id: true,
+                  canFindMany: true,
+                  canFindOne: true,
+                  canFindOnUpdate: true,
+                  canFindOnList: true,
+                  authRoles: true,
+                  isAuth: true,
+                }
+              }
+            }
+          },
         }
       })
       .then((resp: any) => {
@@ -60,8 +109,6 @@ export const ViewField = ({ modelSlug, id }: any) => {
         setFailed(true);
       });
   }
-
-
   if (failed) {
     return (
       <div className="mt-10 max-w-5xl mx-auto text-center">

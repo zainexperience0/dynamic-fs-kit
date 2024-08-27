@@ -57,6 +57,12 @@ model FieldMeta {
 
   fields FieldValue[]
 
+  fieldCreate FieldCreate?
+  fieldUpdate FieldUpdate?
+  fieldDelete FieldDelete?
+
+  fieldFind FieldFind?
+
   Table   Table  @relation("table", fields: [tableId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tableId String @db.ObjectId
 
@@ -76,11 +82,13 @@ model FieldMeta {
 model FieldCreate {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  isUI       Boolean  @default(false)
-  isRequired Boolean  @default(false)
-  isAuth     Boolean  @default(false)
-  authRoles  String[]
-  isUnique   Boolean  @default(false)
+  isUI        Boolean   @default(false)
+  isRequired  Boolean   @default(false)
+  isAuth      Boolean   @default(false)
+  authRoles   String[]
+  isUnique    Boolean   @default(false)
+  fieldMetaId String    @unique @db.ObjectId
+  fieldCreate FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   defaultValue String
 }
@@ -93,15 +101,19 @@ model FieldUpdate {
   isAuth     Boolean  @default(false)
   authRoles  String[]
   isUnique   Boolean  @default(false)
+
+  fieldMetaId String    @unique @db.ObjectId
+  fieldUpdate      FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model FieldDelete {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  isUI        Boolean  @default(false)
-  isAuth      Boolean  @default(false)
+  isUI        Boolean   @default(false)
+  isAuth      Boolean   @default(false)
   authRoles   String[]
-  fieldMetaId String   @db.ObjectId
+  fieldMetaId String    @unique @db.ObjectId
+  fieldDelete      FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // backend model
@@ -114,6 +126,9 @@ model FieldFind {
   canFindOnList   Boolean  @default(false)
   isAuth          Boolean  @default(false)
   authRoles       String[]
+
+  fieldMetaId String    @unique @db.ObjectId
+  fieldFind        FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model FieldValue {

@@ -30,7 +30,7 @@ export const ListModelData = ({ modelSlug }: any) => {
         setData(null);
         setLoading(false);
       });
-  }, []);
+  }, [])
 
   if (!model) {
     return (

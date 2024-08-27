@@ -25,8 +25,8 @@ export async function POST(req: NextRequest, params: any) {
 
     // POST Requests
     if (act === "POST") {
-      console.log({ data_body });
-
+      console.log(JSON.stringify(data_body));
+      
       data = await prismaInstance[model_name][queryType]({
         data: data_body,
       });
@@ -56,6 +56,8 @@ export async function POST(req: NextRequest, params: any) {
       );
     }
   } catch (error: any) {
+    console.log(JSON.stringify(error));
+    
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

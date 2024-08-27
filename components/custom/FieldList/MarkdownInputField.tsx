@@ -10,6 +10,7 @@ import "react-resizable/css/styles.css";
 const MarkdownInputField = ({ field, record, setRecord }: any) => {
   const [editorHeight, setEditorHeight] = useState(300);
 
+
   const handleEditorChange = ({ text }: any) => {
     setRecord({ ...record, [field.slug]: text });
   };
