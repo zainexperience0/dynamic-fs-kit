@@ -14,12 +14,12 @@ import { Find } from '../Actions/Find';
 
 export const TextInput = ({ data, setData }: any) => {
     return (
-        <div className="mx-auto max-w-4xl p-4 space-y-6">
+        <div className="p-4 space-y-6">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                     <AccordionTrigger>Meta</AccordionTrigger>
                     <AccordionContent>
-                        <div className="space-y-4 mt-2">
+                        <div className="space-y-4 mt-2 p-2">
                             <div>
                                 <Label>Name</Label>
                                 <Input
@@ -28,7 +28,6 @@ export const TextInput = ({ data, setData }: any) => {
                                         ...prev,
                                         name: e.target.value
                                     }))}
-                                    className="w-full"
                                 />
                             </div>
                             <div className="flex items-center justify-between">

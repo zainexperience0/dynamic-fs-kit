@@ -1,16 +1,8 @@
 "use client";
-import { prePath, selectMetaOptions } from "@/lib/schemas";
+import { selectMetaOptions } from "@/lib/schemas";
 import { useState } from "react";
 import axios from "axios";
 import { CheckCircle, Loader } from "lucide-react";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -88,22 +80,7 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
     }
 
     return (
-        <div className="max-w-3xl mx-auto my-10 px-4">
-            {page && (
-                <Breadcrumb className="mb-6">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href={`/${prePath}/${model}`}>
-                                {model}
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Create {model}</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
-            )}
+        <div className="my-10 px-4">
             <div className="space-y-6 border p-6">
                 <div className="">
                     <div className="flex items-center justify-between">
@@ -121,26 +98,11 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
                                             id: id
                                         }
                                     },
-                                    sort: {
-                                        connect: {
-                                            id: id
-                                        }
-                                    },
-                                    listTitle: {
-                                        connect: {
-                                            id: id
-                                        }
-                                    },
-                                    listDescription: {
-                                        connect: {
-                                            id: id
-                                        }
-                                    },
                                     Table: {
                                         connect: {
                                             id: id
                                         }
-                                    }
+                                    },
                                 });
                             }}>
                             <SelectTrigger className="w-[200px]">

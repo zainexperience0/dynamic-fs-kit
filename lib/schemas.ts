@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 
 export const prePath = "main";
 
@@ -87,10 +86,5 @@ export const selectMetaOptions = [
     label: "File",
     dataType: "file",
     inputType: "fileInput",
-  },
-  {
-    label: "Redirect",
-    dataType: "string",
-    inputType: "redirectButton",
   },
 ];

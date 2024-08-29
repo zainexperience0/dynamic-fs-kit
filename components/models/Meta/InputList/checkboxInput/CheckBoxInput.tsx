@@ -7,12 +7,12 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Create } from '../Actions/Create';
-import { Update } from '../Actions/Update';
-import { Delete } from '../Actions/Delete';
-import { Find } from '../Actions/Find';
+import { Update } from '../../Actions/Update';
+import { Delete } from '../../Actions/Delete';
+import { Find } from '../../Actions/Find';
+import { Create } from './Create';
 
-export const PasswordInput = ({ data, setData }: any) => {
+export const CheckBoxInput = ({ data, setData }: any) => {
     return (
         <div className="p-4 space-y-6">
             <Accordion type="single" collapsible className="w-full">

@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest, params: any) {
   const model_name = params["params"]["route"][0];
   const data_0 = await req.json();
-  const { act, queryType, select, where, id, data_body } = data_0;
+  const { act, queryType, select, where, data_body } = data_0;
 
   try {
     let data;
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest, params: any) {
     // POST Requests
     if (act === "POST") {
       console.log(JSON.stringify(data_body));
-      
+
       data = await prismaInstance[model_name][queryType]({
         data: data_body,
       });
@@ -51,13 +51,13 @@ export async function POST(req: NextRequest, params: any) {
       return NextResponse.json(data, { status: 200 });
     } else {
       return NextResponse.json(
-        { message: "No data found or action not recognized" },
+        { message: "Something went wrong" },
         { status: 400 }
       );
     }
   } catch (error: any) {
     console.log(JSON.stringify(error));
-    
+
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

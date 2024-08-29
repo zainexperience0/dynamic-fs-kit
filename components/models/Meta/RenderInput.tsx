@@ -4,17 +4,17 @@ import { NumberInput } from './InputList/NumberInput'
 import { EmailInput } from './InputList/EmailInput'
 import { PhoneInput } from './InputList/PhoneInput'
 import { TextAreaInput } from './InputList/TextArea'
-import { DateInput } from './InputList/DateInput'
-import { SwitchInput } from './InputList/SwitchInput'
-import { CheckBoxInput } from './InputList/CheckBoxInput'
-import { SelectInput } from './InputList/SelectInput'
-import { MultiSelectInput } from './InputList/MultiSelectInput'
-import { RedirectButtonInput } from './InputList/RedirectButton'
+import { DateInput } from './InputList/DateInput/DateInput'
+import { SwitchInput } from './InputList/SwitchInput/SwitchInput'
+import { CheckBoxInput } from './InputList/checkboxInput/CheckBoxInput'
+import { SelectInput } from './InputList/SelectInput/SelectInput'
+import { MultiSelectInput } from './InputList/MultiSelectInput/MultiSelectInput'
 import { FileInput } from './InputList/FileInput'
 import { UrlInput } from './InputList/UrlInput'
 import { MarkdownInput } from './InputList/MarkDownInput'
-import { TagInput } from './InputList/TagInput'
-import { MultiToggleInput } from './InputList/MultiToggleInput'
+import { TagInput } from './InputList/TagInput/TagInput'
+import { MultiToggleInput } from './InputList/MultiToggle.tsx/MultiToggleInput'
+import { ToggleInput } from './InputList/ToggleInput/ToggleInput'
 
 
 export const RenderInput = ({ data, setData }: any) => {
@@ -52,9 +52,6 @@ export const RenderInput = ({ data, setData }: any) => {
         msSelectInput: (
             <MultiSelectInput data={data} setData={setData} />
         ),
-        redirectButton: (
-            <RedirectButtonInput data={data} setData={setData} />
-        ),
         fileInput: (
             <FileInput data={data} setData={setData} />
         ),
@@ -69,6 +66,9 @@ export const RenderInput = ({ data, setData }: any) => {
         ),
         mstoggleInput: (
             <MultiToggleInput data={data} setData={setData} />
+        ),
+        toggleInput: (
+            <ToggleInput data={data} setData={setData} />
         )
     }
 

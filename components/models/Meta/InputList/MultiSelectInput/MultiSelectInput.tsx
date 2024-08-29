@@ -7,12 +7,13 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Create } from '../Actions/Create';
-import { Update } from '../Actions/Update';
-import { Delete } from '../Actions/Delete';
-import { Find } from '../Actions/Find';
+import { Create } from './Create';
+import { Update } from '../../Actions/Update';
+import { Delete } from '../../Actions/Delete';
+import { Find } from '../../Actions/Find';
 
-export const UrlInput = ({ data, setData }: any) => {
+
+export const MultiSelectInput = ({ data, setData }: any) => {
    
 
     return (
