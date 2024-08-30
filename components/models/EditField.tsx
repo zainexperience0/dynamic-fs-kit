@@ -273,8 +273,7 @@ export const EditField = ({ model, id, callbackFn }: any) => {
         <Button
           onClick={updateRecord}
           disabled={editing || editFail || editSuccess}
-          className={`w-full flex items-center justify-center px-4 py-2 font-medium text-white rounded-md focus:outline-none ${editing ? "bg-blue-600" : "bg-blue-500 hover:bg-blue-600"
-            }`}
+          className="w-full"
         >
           {editing && <Loader className="h-4 w-4 mr-2 animate-spin" />}
           {editing && "Saving..."}

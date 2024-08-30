@@ -41,6 +41,16 @@ export async function POST(req: NextRequest, params: any) {
       console.log(error);
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
+  }else if (act === "DELETE") {
+    try {
+      const data = await prismaInstance[model_name][queryType]({
+        where: where,
+      });
+      return NextResponse.json(data, { status: 200 });
+    } catch (error: any) {
+      console.log(error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
   }
 }
 
