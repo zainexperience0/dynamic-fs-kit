@@ -40,66 +40,25 @@ export const ViewField = ({ modelSlug, id }: any) => {
   const fetchData = () => {
     axios
       .post(`/api/v1/dynamic/${modelSlug}`, {
+        queryType: "findUnique",
         act: "GET",
         where: {
-          id: id
+          id: id,
         },
-        queryType: "findUnique",
         select: {
           id: true,
           name: true,
-          description: true,
           fields: {
             select: {
-              id: true,
               name: true,
+              id: true,
               inputType: true,
               dataType: true,
               isSearchable: true,
               isSortable: true,
-              fieldCreate: {
-                select: {
-                  id: true,
-                  isUI: true,
-                  isRequired: true,
-                  isAuth: true,
-                  authRoles: true,
-                  isUnique: true,
-                  defaultValue: true,
-                }
-              },
-              fieldUpdate: {
-                select: {
-                  id: true,
-                  isUI: true,
-                  isRequired: true,
-                  isAuth: true,
-                  authRoles: true,
-                  isUnique: true,
-                }
-              },
-              fieldDelete: {
-                select: {
-                  id: true,
-                  isUI: true,
-                  isAuth: true,
-                  authRoles: true,
-                }
-              },
-              fieldFind: {
-                select: {
-                  id: true,
-                  canFindMany: true,
-                  canFindOne: true,
-                  canFindOnUpdate: true,
-                  canFindOnList: true,
-                  authRoles: true,
-                  isAuth: true,
-                }
-              }
             }
-          },
-        }
+          }
+        },
       })
       .then((resp: any) => {
         setData(resp.data);
@@ -109,6 +68,8 @@ export const ViewField = ({ modelSlug, id }: any) => {
         setFailed(true);
       });
   }
+
+
   if (failed) {
     return (
       <div className="mt-10 max-w-5xl mx-auto text-center">
@@ -183,7 +144,7 @@ export const ViewField = ({ modelSlug, id }: any) => {
       </div>
       <Separator className="h-1 w-full my-4" />
       <div className="space-y-6 w-full">
-        <Tabs defaultValue="create" className="w-full">
+        <Tabs defaultValue="table" className="w-full">
           <TabsList className="w-full">
             <TabsTrigger value="table">Table</TabsTrigger>
             <TabsTrigger value="create">Create</TabsTrigger>
@@ -201,7 +162,7 @@ export const ViewField = ({ modelSlug, id }: any) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.fields?.map((field: any) => (
+                {data?.fields?.map((field: any, index: any) => (
                   <TableRow key={field.id}>
                     <TableCell className="w-[100px]">{field.name}</TableCell>
                     <TableCell>{field.inputType}</TableCell>

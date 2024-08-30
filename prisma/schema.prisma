@@ -13,38 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AllFields {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?   @default("")
-  password       String?   @default(uuid())
-  age            Int?      @default(0)
-  email          String?   @default("")
-  phone          String?   @default("")
-  content        String?   @default("")
-  date           DateTime? @default(now())
-  switch         Boolean?  @default(false)
-  checkbox       Boolean?  @default(false)
-  select         String?   @default("")
-  multiSelect    String[]  @default([])
-  radio          String?   @default("1")
-  toogle         String?   @default("1")
-  lists          String[]  @default([])
-  markdown       String?   @default("")
-  url            String?   @default("")
-  file           String?   @default("")
-  redirectButton String?   @default("")
-}
-
 model Table {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
   fields      FieldMeta[] @relation("table")
 
-  defaultSearchFields FieldMeta[] @relation("search")
-  defaultSortField    FieldMeta?  @relation("sort")
-  listTitle           FieldMeta?  @relation("listTitle")
-  listDescription     FieldMeta?  @relation("listDescription")
+  config Json?
 }
 
 model FieldMeta {
@@ -65,18 +40,6 @@ model FieldMeta {
 
   Table   Table  @relation("table", fields: [tableId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tableId String @db.ObjectId
-
-  search   Table?  @relation("search", fields: [searchId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  searchId String? @db.ObjectId
-
-  sort   Table?  @relation("sort", fields: [sortId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sortId String? @unique @db.ObjectId
-
-  listTitle   Table?  @relation("listTitle", fields: [listTitleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  listTitleId String? @unique @db.ObjectId
-
-  listDescription   Table?  @relation("listDescription", fields: [listDescriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  listDescriptionId String? @unique @db.ObjectId
 }
 
 model FieldCreate {
@@ -103,7 +66,7 @@ model FieldUpdate {
   isUnique   Boolean  @default(false)
 
   fieldMetaId String    @unique @db.ObjectId
-  fieldUpdate      FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fieldUpdate FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model FieldDelete {
@@ -113,7 +76,7 @@ model FieldDelete {
   isAuth      Boolean   @default(false)
   authRoles   String[]
   fieldMetaId String    @unique @db.ObjectId
-  fieldDelete      FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fieldDelete FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // backend model
@@ -128,7 +91,7 @@ model FieldFind {
   authRoles       String[]
 
   fieldMetaId String    @unique @db.ObjectId
-  fieldFind        FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fieldFind   FieldMeta @relation(fields: [fieldMetaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model FieldValue {

@@ -10,8 +10,7 @@ import { prePath } from "@/lib/schemas";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { Loader, MoveRight, Pencil, Plus, Trash } from "lucide-react";
-import { cn, isoToDate, timeAgo } from "@/lib/utils";
-import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 import axios from "axios";
 export const ListModelData = ({ modelSlug }: any) => {
   const [data, setData] = useState<any>([]);
@@ -21,7 +20,12 @@ export const ListModelData = ({ modelSlug }: any) => {
   useEffect(() => {
     axios.post(`/api/v1/dynamic/${modelSlug}`, {
       queryType: "findMany",
-      act: "GET"
+      select: {
+        id: true,
+        name: true,
+        description: true,
+      },
+      act: "GET",
     }).then((resp: any) => {
       setData(resp.data);
       setLoading(false);
@@ -31,6 +35,7 @@ export const ListModelData = ({ modelSlug }: any) => {
         setLoading(false);
       });
   }, [])
+
 
   if (!model) {
     return (
@@ -57,7 +62,6 @@ export const ListModelData = ({ modelSlug }: any) => {
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row items-center space-x-4">
             <p className="text-5xl  font-semibold capitalize">{model.name}</p>
-
           </div>
           <Link
             href={`/${prePath}/${modelSlug}/create`}

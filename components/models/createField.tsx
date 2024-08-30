@@ -30,7 +30,7 @@ export const CreateField = ({ model, callbackFn, page }: any) => {
     axios
       .post(`/api/v1/dynamic/${model}`, {
         data_body: data,
-        act: "POST",
+        act: "CREATE",
         queryType: "create",
       })
       .then((resp: any) => {

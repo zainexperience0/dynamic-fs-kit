@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   useEffect(() => {
-    window.location.href = "/main/allFields";
+    window.location.href = "/main/table";
   });
   return <div>MainPage</div>;
 };

@@ -15,9 +15,11 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export const EditField = ({ model, id, callbackFn }: any) => {
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>({});
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
 
@@ -26,32 +28,21 @@ export const EditField = ({ model, id, callbackFn }: any) => {
   const [editFail, setEditFail] = useState(false);
 
   const updateRecord = () => {
-    const requiredFields = model.fields?.filter(
-      (field: any) => field.required && field.dataType !== "relation"
-    );
-
-    if (requiredFields?.length > 0) {
-      const isEmptyRecord = requiredFields.find(
-        (field: any) =>
-          data[field.name] === undefined || data[field.name] === ""
-      );
-      if (isEmptyRecord) {
-        alert(`Please fill all required fields: ${requiredFields?.map((field: any) => field.name).join(', ')}`);
-        return;
-      }
-    }
-
     setEditing(true);
     axios
       .post(`/api/v1/dynamic/${model}`, {
-        data_body: data,
-        act: "UPDATE",
+        data_body: {
+          name: data.name,
+          description: data.description,
+          config: data.config,
+        },
         where: {
           id: id,
         },
+        act: "UPDATE",
         queryType: "update",
       })
-      .then((resp: any) => {
+      .then(() => {
         setEditing(false);
         setEditSuccess(true);
         setTimeout(() => {
@@ -83,18 +74,50 @@ export const EditField = ({ model, id, callbackFn }: any) => {
   const fetchData = () => {
     axios
       .post(`/api/v1/dynamic/${model}`, {
-        act: "GET",
         where: {
           id: id,
+          fields: {
+            some: {
+              fieldFind: {
+                canFindOnUpdate: true
+              }
+            }
+          }
         },
-        queryType: "findUnique",
         select: {
+          id: true,
           name: true,
+          config: true,
           description: true,
+          fields: {
+            select: {
+              name: true,
+              id: true,
+            },
+            where: {
+              isSearchable: true,
+              isSortable: true,
+            }
+          },
         },
+        act: "GET",
+        queryType: "findUnique",
       })
       .then((resp: any) => {
-        setData(resp.data);
+        const fetchedData = resp.data;
+        const initialConfig = fetchedData.config || {};
+
+        setData({
+          ...fetchedData,
+          config: {
+            ...initialConfig,
+            defaultSortField: initialConfig.defaultSortField || "",
+            listTitle: initialConfig.listTitle || "",
+            listDescription: initialConfig.listDescription || "",
+            searchFields: initialConfig.searchFields || [],
+          },
+        });
+
         setLoading(false);
       })
       .catch(() => {
@@ -105,9 +128,7 @@ export const EditField = ({ model, id, callbackFn }: any) => {
   if (!model) {
     return (
       <div className="mt-10 max-w-5xl mx-auto text-center">
-        <p className="text-red-600 text-xl font-semibold">
-          Page not found!
-        </p>
+        <p className="text-red-600 text-xl font-semibold">Page not found!</p>
       </div>
     );
   }
@@ -126,7 +147,7 @@ export const EditField = ({ model, id, callbackFn }: any) => {
   if (loading) {
     return (
       <div className="mt-10 max-w-5xl mx-auto text-center">
-        <Loader className="mx-auto animate-spin text-blue-500" size={48} />
+        <Loader className="mx-auto animate-spin" size={48} />
       </div>
     );
   }
@@ -136,9 +157,7 @@ export const EditField = ({ model, id, callbackFn }: any) => {
       <Breadcrumb className="mb-5">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/${prePath}/${model}`}>
-              {data.name}
-            </BreadcrumbLink>
+            <BreadcrumbLink href={`/${prePath}/${model}`}>{data.name}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -173,13 +192,89 @@ export const EditField = ({ model, id, callbackFn }: any) => {
             placeholder="Enter description"
           />
         </div>
-      </div>
 
+        {data.fields.length > 0 && (
+          <div className="space-y-6 border rounded-md p-2">
+            <Label className="block text-sm font-medium">Config</Label>
+            <div>
+              <Label className="block text-sm font-medium">Default sort field</Label>
+              <Select
+                value={data.config.defaultSortField}
+                onValueChange={(e) => setData({ ...data, config: { ...data.config, defaultSortField: e } })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select default sort field" />
+                </SelectTrigger>
+                <SelectContent>
+                  {data.fields.map((field: any) => (
+                    <SelectItem key={field.id} value={field.id}>
+                      {field.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="block text-sm font-medium">List title</Label>
+              <Select
+                value={data.config.listTitle}
+                onValueChange={(e) => setData({ ...data, config: { ...data.config, listTitle: e } })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select list title" />
+                </SelectTrigger>
+                <SelectContent>
+                  {data.fields.map((field: any) => (
+                    <SelectItem key={field.id} value={field.id}>
+                      {field.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="block text-sm font-medium">List description</Label>
+              <Select
+                value={data.config.listDescription}
+                onValueChange={(e) => setData({ ...data, config: { ...data.config, listDescription: e } })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select list description" />
+                </SelectTrigger>
+                <SelectContent>
+                  {data.fields.map((field: any) => (
+                    <SelectItem key={field.id} value={field.id}>
+                      {field.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="block text-sm font-medium">Search fields</Label>
+              <ToggleGroup
+                value={data.config.searchFields}
+                onValueChange={(e) =>
+                  setData({ ...data, config: { ...data.config, searchFields: e } })
+                }
+                type="multiple"
+              >
+                {data.fields.map((field: any) => (
+                  <ToggleGroupItem key={field.id} value={field.id}>
+                    {field.name}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="mt-6">
         <Button
           onClick={updateRecord}
           disabled={editing || editFail || editSuccess}
-          className={`w-full flex items-center justify-center px-4 py-2 font-medium text-white rounded-md focus:outline-none ${editing ? "bg-blue-600" : "bg-blue-500 hover:bg-blue-600"}`}
+          className={`w-full flex items-center justify-center px-4 py-2 font-medium text-white rounded-md focus:outline-none ${editing ? "bg-blue-600" : "bg-blue-500 hover:bg-blue-600"
+            }`}
         >
           {editing && <Loader className="h-4 w-4 mr-2 animate-spin" />}
           {editing && "Saving..."}

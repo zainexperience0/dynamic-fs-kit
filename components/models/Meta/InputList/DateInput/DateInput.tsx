@@ -10,7 +10,7 @@ import {
 import { Update } from '../../Actions/Update';
 import { Delete } from '../../Actions/Delete';
 import { Find } from '../../Actions/Find';
-import { Create } from '../../Actions/Create';
+import { Create } from './Create';
 
 export const DateInput = ({ data, setData }: any) => {
     return (

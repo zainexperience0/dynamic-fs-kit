@@ -23,7 +23,7 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
         axios
             .post(`/api/v1/dynamic/${model}`, {
                 data_body: data,
-                act: "POST",
+                act: "CREATE",
                 queryType: "create",
             })
             .then((resp: any) => {
@@ -58,9 +58,6 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
         });
     };
 
-    console.log(data);
-
-
     if (!model) {
         return (
             <div className="mt-10 max-w-5xl mx-auto text-center">
@@ -93,11 +90,6 @@ export const CreateMeta = ({ model, callbackFn, id, page }: any) => {
                                     ...data,
                                     inputType: e,
                                     dataType: selectedOption?.dataType || "",
-                                    search: {
-                                        connect: {
-                                            id: id
-                                        }
-                                    },
                                     Table: {
                                         connect: {
                                             id: id

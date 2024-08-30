@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    window.location.href = "/main/blog";
+    window.location.href = "/main/table";
   });
   return <div></div>;
 }
